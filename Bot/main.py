@@ -41,7 +41,7 @@ async def load_commands():
 
 async def load_events():
     for filename in os.listdir(event_file_path):
-        if filename.endwith('.py') and filename != "__init__.py":
+        if filename.endswith('.py') and filename != "__init__.py":
             try:
                 await bot.load_extension(f"events.{filename[:-3]}")
             except Exception as e:
