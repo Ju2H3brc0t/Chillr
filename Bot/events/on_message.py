@@ -11,13 +11,15 @@ class on_msg(commands.Cog):
         bot_channel = self.bot.get_channel(118160135961976965)
         bot_staff_channel = self.bot.get_channel(1122777165331693678)
         logs_channel = self.bot.get_channel(138880792009900082)
-        print(f"{message} sended in {message.channel}")
-        print(f"{message.channel_id:}")
+        print(f"{message} sent in {message.channel}")
+        print(f"{message.channel.id}")
         try:
             if message.channel == bot_channel:
                 try:
+                    print("Deleting message in 3 minutes")
                     await asyncio.sleep(180)
                     await message.delete()
+                    print("Message deleted")
                 except Exception as e:
                     print(f"A error has occured while deleting message: {e}")
             elif message.channel == bot_staff_channel:
