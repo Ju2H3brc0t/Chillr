@@ -32,7 +32,7 @@ async def on_ready():
         print(f"An error has occured: {e}")
 
 async def load():
-    for filename in os.listdir(commands_file_path, event_file_path):
+    for filename in os.listdir(commands_file_path and event_file_path):
         if filename.endswith('.py') and filename != "__init__.py":
             try:
                 await bot.load_extension(f"commands.{filename[:-3]}")
