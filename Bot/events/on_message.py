@@ -16,3 +16,6 @@ class on_msg(commands.Cog):
         elif message.channel == bot.get_channel(1138880792009900082):
             await asyncio.sleep(604800)
             await message.delete()
+    
+async def setup(bot):
+    await bot.add_cog(on_msg(bot))
