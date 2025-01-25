@@ -14,7 +14,7 @@ class on_msg(commands.Cog):
         print(f"{message} sent in {message.channel}")
         print(f"{message.channel.id}")
         try:
-            if message.channel.id == bot_channel:
+            if message.channel.id == bot_channel.id:
                 try:
                     print("Deleting message in 3 minutes")
                     await asyncio.sleep(180)
@@ -22,10 +22,10 @@ class on_msg(commands.Cog):
                     print("Message deleted")
                 except Exception as e:
                     print(f"A error has occured while deleting message: {e}")
-            elif message.channel == bot_staff_channel:
+            elif message.channel.id == bot_staff_channel.id:
                 await asyncio.sleep(3600)
                 await message.delete()
-            elif message.channel == logs_channel:
+            elif message.channel.id == logs_channel.id:
                 await asyncio.sleep(604800)
                 await message.delete()
         except Exception as e:
