@@ -14,7 +14,7 @@ class on_msg(commands.Cog):
         print(f"{message} sent in {message.channel}")
         print(f"{message.channel.id}")
         try:
-            if message.channel == bot_channel:
+            if message.channel.id == bot_channel:
                 try:
                     print("Deleting message in 3 minutes")
                     await asyncio.sleep(180)
