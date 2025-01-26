@@ -1,0 +1,10 @@
+event:
+  on_message:
+    channel_id:
+      bot: "1118160135961976965"
+      bot_staff: "1122777165331693678"
+      log: "1138880792009900082"
+    sleep_time:
+      bot: "180"
+      bot_staff: "3600"
+      log: "604800"
