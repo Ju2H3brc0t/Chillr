@@ -12,6 +12,7 @@ class on_msg(commands.Cog):
         print(message.channel.id)
         try:
             if message_channel == 118160135961976965:
+                print("Starting message deletion")
                 await asyncio.sleep(180)
                 await message.delete()
             elif message_channel == 1122777165331693678:
