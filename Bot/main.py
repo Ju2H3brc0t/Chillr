@@ -20,6 +20,7 @@ config = load_config()
 
 token_file_path = config["path"]["token"]
 commands_file_path = config["path"]["commands"]
+event_file_path = config["path"]["events"]
 
 @bot.event
 async def on_ready():
@@ -30,19 +31,28 @@ async def on_ready():
     except Exception as e:
         print(f"An error has occured: {e}")
 
-async def load():
+async def load_commands():
     for filename in os.listdir(commands_file_path):
         if filename.endswith('.py') and filename != "__init__.py":
             try:
                 await bot.load_extension(f"commands.{filename[:-3]}")
             except Exception as e:
-                print(f"A error occured: {e}")
+                print(f"A error has occured: {e}")
+
+async def load_events():
+    for filename in os.listdir(event_file_path):
+        if filename.endswith('.py') and filename != "__init__.py":
+            try:
+                await bot.load_extension(f"events.{filename[:-3]}")
+            except Exception as e:
+                print(f"A error has occured: {e}")
 
 with open(token_file_path) as file:
     token = file.read()
 
 async def main():
-    await load()
+    await load_commands()
+    await load_events()
     await bot.start(token)
 
 asyncio.run(main())
