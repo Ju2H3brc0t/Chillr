@@ -37,7 +37,7 @@ class on_msg(commands.Cog):
             if int(message_channel) == int(bot_channel):
                 print("Starting message deletion in bot channel.")
                 await asyncio.sleep(int(bot_sleep))
-                message.delete()
+                await message.delete()
                 print("Message deleted in bot channel.")
             elif int(message_channel) == int(staff_bot_channel):
                 await asyncio.sleep(int(staff_bot_channel))
