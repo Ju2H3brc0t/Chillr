@@ -13,9 +13,12 @@ class on_msg(commands.Cog):
         staff_bot_channel = 1122777165331693678
         log_channel = 138880792009900082
         print(message.channel.id)
+        print(bot_channel)
         try:
+            print("Starting to sort the rooms.")
             if message_channel == bot_channel:
-                await asyncio.sleep(180)
+                print("Starting message deletion.")
+                await asyncio.sleep(5)
                 await message.delete()
             elif message_channel == staff_bot_channel:
                 await asyncio.sleep(3600)
