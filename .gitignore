@@ -1,5 +1,5 @@
 *.yaml
 /home/acaminade/Code/GitHub/Chillr/Bot/token.txt
 /home/acaminade/Code/GitHub/Chillr/Bot/commands/__pycache__/
-/home/acaminade/Code/GitHub/Chillr/Bot/event/__pycache__/
+/home/acaminade/Code/GitHub/Chillr/Bot/events/__pycache__/
 /home/acaminade/Code/GitHub/Chillr/Bot/commands/__init__.py
