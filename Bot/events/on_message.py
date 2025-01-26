@@ -23,6 +23,8 @@ bot_sleep = config['event']['on_message']['sleep_time']['bot']
 staff_bot_sleep = config['event']['on_message']['sleep_time']['bot_staff']
 log_sleep = config['event']['on_message']['sleep_time']['log']
 
+print(f"Bot Channel: {bot_channel}, Staff Bot Channel: {staff_bot_channel}, Log Channel: {log_channel},\n Bot Sleep: {bot_sleep}, Staff Bot Sleep: {staff_bot_sleep}, Log Sleep: {log_sleep}")
+
 class on_msg(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -40,6 +42,8 @@ class on_msg(commands.Cog):
         elif message_channel == log_channel:
             await asyncio.sleep(log_sleep)
             await message.delete()
+        else:
+            print("This message is not in a bot channel, staff bot channel, or log channel.")
 
     
 async def setup(bot):
