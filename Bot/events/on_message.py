@@ -11,14 +11,13 @@ class on_msg(commands.Cog):
         message_channel = message.channel.id
         print(message.channel.id)
         try:
-            if str(message_channel) == str(118160135961976965):
-                print("Starting message deletion")
+            if message_channel == discord.get_channel(118160135961976965):
                 await asyncio.sleep(180)
                 await message.delete()
-            elif str(message_channel) == str(1122777165331693678):
+            elif message_channel == discord.get_channel(1122777165331693678):
                 await asyncio.sleep(3600)
                 await message.delete()
-            elif str(message_channel) == str(138880792009900082):
+            elif message_channel == discord.get_channel(138880792009900082):
                 await asyncio.sleep(604800)
                 await message.delete()
         except Exception as e:
