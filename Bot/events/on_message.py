@@ -9,15 +9,18 @@ class on_msg(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
         message_channel = message.channel.id
+        bot_channel = 118160135961976965
+        staff_bot_channel = 1122777165331693678
+        log_channel = 138880792009900082
         print(message.channel.id)
         try:
-            if message_channel == discord.get_channel(118160135961976965):
+            if message_channel == bot_channel:
                 await asyncio.sleep(180)
                 await message.delete()
-            elif message_channel == discord.get_channel(1122777165331693678):
+            elif message_channel == staff_bot_channel:
                 await asyncio.sleep(3600)
                 await message.delete()
-            elif message_channel == discord.get_channel(138880792009900082):
+            elif message_channel == log_channel:
                 await asyncio.sleep(604800)
                 await message.delete()
         except Exception as e:
