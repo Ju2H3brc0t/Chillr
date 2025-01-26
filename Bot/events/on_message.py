@@ -33,17 +33,22 @@ class on_msg(commands.Cog):
     async def on_message(self, message):
         message_channel = message.channel.id
 
-        if message_channel == bot_channel:
-            await asyncio.sleep(bot_sleep)
-            message.delete()
-        elif message_channel == staff_bot_channel:
-            await asyncio.sleep(staff_bot_channel)
-            await message.delete()
-        elif message_channel == log_channel:
-            await asyncio.sleep(log_sleep)
-            await message.delete()
-        else:
-            print("This message is not in a bot channel, staff bot channel, or log channel.")
+        try:
+            if str(message_channel) == str(bot_channel):
+                print("Starting message deletion in bot channel.")
+                await asyncio.sleep(bot_sleep)
+                message.delete()
+                print("Message deleted in bot channel.")
+            elif str(message_channel) == str(staff_bot_channel):
+                await asyncio.sleep(staff_bot_channel)
+                await message.delete()
+            elif str(message_channel) == str(log_channel):
+                await asyncio.sleep(log_sleep)
+                await message.delete()
+            else:
+                print("This message is not in a bot channel, staff bot channel, or log channel.")
+        except Exception as e:
+            print(f"An error has occured: {e}")
 
     
 async def setup(bot):
