@@ -84,6 +84,8 @@ class on_msg(commands.Cog):
             except ValueError:
                 await message.add_reaction("❌")
                 await message.channel.send(f"{message.author.mention} le message envoyé n'est pas un nombre, le compteur est a {count}")
+            except Exception as e:
+                print(f"An error has occured: {e}")
     
 async def setup(bot):
     await bot.add_cog(on_msg(bot))
