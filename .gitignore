@@ -1,2 +1,4 @@
+__pycache__/
 *.yaml
+count.json
 token.txt
