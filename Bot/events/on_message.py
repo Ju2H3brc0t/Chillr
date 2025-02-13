@@ -1,8 +1,8 @@
 from discord.ext import commands
 import asyncio
-import yaml
 import json
 import os
+import yaml
 
 def load_config(config_file="event_config.yaml"):
     dir = os.path.dirname(os.path.abspath(__file__))
@@ -16,55 +16,56 @@ def load_config(config_file="event_config.yaml"):
 
 config = load_config()
 
-bot_channel = config['event']['on_message']['channel_id']['bot']
-staff_bot_channel = config['event']['on_message']['channel_id']['bot_staff']
-log_channel = config['event']['on_message']['channel_id']['log']
-counting_channel = config['event']['on_message']['channel_id']['counting']
+counting_channel = config['event']['counting']['channel_id']
+bot_channel = config['event']['message_deletion']['channel_id']['bot']
+staff_bot_channel = config['event']['message_deletion']['channel_id']['bot_staff']
+log_channel = config['event']['message_deletion']['channel_id']['log']
 
-bot_sleep = config['event']['on_message']['sleep_time']['bot']
-staff_bot_sleep = config['event']['on_message']['sleep_time']['bot_staff']
-log_sleep = config['event']['on_message']['sleep_time']['log']
+bot_sleep = config['event']['message_deletion']['sleep_time']['bot']
+staff_bot_sleep = config['event']['message_deletion']['sleep_time']['bot_staff']
+log_sleep = config['event']['message_deletion']['sleep_time']['log']
 
-file_path_count = config['event']['on_message']['path']['count']
+file_path_count = config['event']['counting']['path']
 
 def load_count():
     try:
         with open(file_path_count, "r") as f:
             data = json.load(f)
             return data['count']
-    except FileNotFoundError:
-        return 0
-    except json.JSONDecodeError:
+    except (FileNotFoundError, json.JSONDecodeError):
         return 0
 
 def save_count():
-    data = {'count' : count}
+    data = {'count': count}
     with open(file_path_count, "w") as f:
-        json.dump(data, f, intent=4)
+        json.dump(data, f, indent=4)
 
 count = load_count()
+last_message = {}
 
-class on_msg(commands.Cog):
+class on_message(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-    
+
     @commands.Cog.listener()
     async def on_message(self, message):
+        if message.author == self.bot.user:
+            return
+        
         message_channel = message.channel.id
 
-        if int(message_channel) == int(bot_channel):
-            await asyncio.sleep(int(bot_sleep))
+        if message_channel == bot_channel:
+            await asyncio.sleep(bot_sleep)
             await message.delete()
-        elif int(message_channel) == int(staff_bot_channel):
-            await asyncio.sleep(int(staff_bot_channel))
+        elif message_channel == staff_bot_channel:
+            await asyncio.sleep(staff_bot_sleep)
             await message.delete()
-        elif int(message_channel) == int(log_channel):
-            await asyncio.sleep(int(log_sleep))
+        elif message_channel == log_channel:
+            await asyncio.sleep(log_sleep)
             await message.delete()
-        
-        global count
-        global last_message
-        if message_channel == counting_channel and message.author != self.bot.user:
+
+        global count, last_message
+        if message_channel == counting_channel:
             try:
                 user_count = int(message.content)
                 if user_count == count + 1 and message.author.id not in last_message:
@@ -83,9 +84,7 @@ class on_msg(commands.Cog):
                 last_message = {message.author.id: message.content}
             except ValueError:
                 await message.add_reaction("❌")
-                await message.channel.send(f"{message.author.mention} le message envoyé n'est pas un nombre, le compteur est a {count}")
-            except Exception as e:
-                print(f"An error has occured: {e}")
-    
+                await message.channel.send(f"{message.author.mention}, veuillez envoyer un nombre entier.")
+
 async def setup(bot):
-    await bot.add_cog(on_msg(bot))
+    await bot.add_cog(on_message(bot))
