@@ -19,12 +19,11 @@ config = load_config()
 counting_channel = config['event']['counting']['channel_id']
 bot_channel = config['event']['message_deletion']['channel_id']['bot']
 staff_bot_channel = config['event']['message_deletion']['channel_id']['bot_staff']
-log_channel = config['event']['message_deletion']['channel_id']['log']
-
 bot_sleep = config['event']['message_deletion']['sleep_time']['bot']
 staff_bot_sleep = config['event']['message_deletion']['sleep_time']['bot_staff']
 log_sleep = config['event']['message_deletion']['sleep_time']['log']
 
+log_channel = config['event']['message_deletion']['channel_id']['log']
 file_path_count = config['event']['counting']['path']
 
 def load_count():
@@ -78,6 +77,7 @@ class on_message(commands.Cog):
                     if message.author.id in last_message:
                         reason = "Vous ne pouvez pas participer deux fois de suite"
                     last_message = {message.author.id: message.content}
+                    last_message.clear()
                     count = 0
                     save_count()
                     await message.channel.send(f"{message.author.mention} s'est trompé, {reason}, le compteur a été remis à zéro.")
