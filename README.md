@@ -9,9 +9,9 @@ Chillr is specifically designed to respond to the needs of my Discord server, pr
 
 Chillr provide various functionalities to enhance server management and user interaction:
 
- - Automatied Message Cleanup: Message in specific channels are autmatically deleted after a set time.
+ - **Automatied Message Cleanup**: Message in specific channels are autmatically deleted after a set time.
 
- - Counting System: A counting game where users must increment the number correctly without sending consecutive messages.
+ - **Counting System**: A counting game where users must increment the number correctly without sending consecutive messages.
 
 Some features are still under developpement.
 
