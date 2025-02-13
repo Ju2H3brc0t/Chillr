@@ -53,15 +53,20 @@ class on_message(commands.Cog):
         
         message_channel = message.channel.id
 
-        if message_channel == bot_channel:
-            await asyncio.sleep(bot_sleep)
-            await message.delete()
-        elif message_channel == staff_bot_channel:
-            await asyncio.sleep(staff_bot_sleep)
-            await message.delete()
-        elif message_channel == log_channel:
-            await asyncio.sleep(log_sleep)
-            await message.delete()
+        try:
+            if message_channel == bot_channel:
+                print("Starting message deletion")
+                await asyncio.sleep(bot_sleep)
+                await message.delete()
+                print("Message deleted")
+            elif message_channel == staff_bot_channel:
+                await asyncio.sleep(staff_bot_sleep)
+                await message.delete()
+            elif message_channel == log_channel:
+                await asyncio.sleep(log_sleep)
+                await message.delete()
+        except Exception as e:
+            print(f"An error has occured: {e}")
 
         global count, last_message
         if message_channel == counting_channel:
