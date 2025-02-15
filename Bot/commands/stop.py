@@ -34,17 +34,19 @@ class stop(commands.Cog):
         log_channel_id = self.bot.get_channel(log_channel)
         
         await interaction.response.send_message("Stopping the bot...", ephemeral=True)
+        print("Stopping the bot...")
         
         for role in interaction.guild.roles:
             if role.is_default():
                 continue
             await counting_channel_id.set_permissions(role, send_messages=False)
-        await self.bot.close()
-        sys.exit(0)
-
+        
         await bot_channel_id.purge(limit=100)
         await bot_staff_channel_id.purge(limit=100)
         await log_channel_id.purge(limit=100)
+
+        await self.bot.close()
+        sys.exit(0)
 
 async def setup(bot):
     await bot.add_cog(stop(bot))
