@@ -34,9 +34,10 @@ class OnReady(commands.Cog):
         except Exception as e:
             print(f"Failed to sync commands: {e}")
 
+        await log_channel_id.send("Bot is starting.")
+
         counting_channel = self.bot.get_channel(counting_channel_id)
         if counting_channel is None:
-            print(f"Error: Channel ID {counting_channel_id} not found.")
             return
 
         for role in counting_channel.guild.roles:
@@ -53,6 +54,7 @@ class OnReady(commands.Cog):
         await log_channel.purge(limit=100)
 
         print("Bot is ready.")
+        await log_channel_id.send("Bot is ready.")
         
 async def setup(bot):
     cog = OnReady(bot)

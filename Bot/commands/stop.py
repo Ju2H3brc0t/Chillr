@@ -17,8 +17,6 @@ def load_config(config_file="command_config.yaml"):
 
 config = load_config()
 
-bot_owner_id = config['command']['stop']['user_id']['bot_owner']
-
 counting_channel = config['command']['stop']['channel_id']['counting']
 bot_channel = config['command']['stop']['channel_id']['bot']
 bot_staff_channel = config['command']['stop']['channel_id']['bot_staff']
@@ -30,16 +28,17 @@ class stop(commands.Cog):
     
     @app_commands.command(name="stop", description="Stop the bot.")
     async def stop(self, interaction: discord.Interaction):
-        bot_owner_id = self.bot.get_user(bot_owner_id)
 
         counting_channel_id = self.bot.get_channel(counting_channel)
         bot_channel_id = self.bot.get_channel(bot_channel)
         bot_staff_channel_id = self.bot.get_channel(bot_staff_channel)
         log_channel_id = self.bot.get_channel(log_channel)
         
-        await interaction.response.send_message("Stopping the bot...", ephemeral=True)
-        print("Stopping the bot...")
+        await interaction.response.send_message(f"Bot is being stopped by {interaction.user.mention}", ephemeral=True)
+        print("Bot is stopping.")
         
+        await log_channel_id.send(f"Bot is being stopped by {interaction.user.mention}.")
+
         for role in interaction.guild.roles:
             if role.is_default():
                 continue
