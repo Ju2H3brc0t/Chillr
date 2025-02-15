@@ -24,12 +24,13 @@ class stop(commands.Cog):
         self.bot = bot
     
     @app_commands.command(name="stop", description="Stop the bot.")
-    async def stop(self, ctx, interaction: discord.Interaction, channel: counting_channel):
+    async def stop(self, interaction: discord.Interaction):
+        counting_channel_id = self.bot.get_channel(counting_channel)
         await interaction.response.send_message("Stopping the bot...", ephemeral=True)
-        for role in ctx.guild.roles:
+        for role in interaction.guild.roles:
             if role.is_default():
                 continue
-            await channel.set_permissions(role, send_messages=False)
+            await counting_channel_id.set_permissions(role, send_messages=False)
         await self.bot.close()
         sys.exit(0)
 
