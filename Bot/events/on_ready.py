@@ -1,0 +1,30 @@
+import discord
+from discord.ext import commands
+import yaml
+import os
+
+def load_config(config_file="event_config.yaml"):
+    dir = os.path.dirname(os.path.abspath(__file__))
+    path = os.path.join(dir, config_file)
+
+    if not os.path.exists(path):
+        raise FileNotFoundError("Configuration file not found")
+
+    with open(path, "r") as file:
+        return yaml.safe_load(file)
+
+config = load_config()
+
+counting_channel = config['event']['counting']['channel_id']
+
+class on_ready(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+
+    @commands.Cog.listener()
+    async def on_ready(self, interaction: discord.Interaction):
+        counting_channel_id = self.bot.get_channel(counting_channel)
+        for role in interaction.guild.roles:
+            if role.is_default():
+                continue
+            await counting_channel_id.set_permissions(role, send_messages=True)
