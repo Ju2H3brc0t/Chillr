@@ -1,4 +1,3 @@
-import discord
 from discord.ext import commands
 import yaml
 import os
@@ -40,8 +39,6 @@ class OnReady(commands.Cog):
             if role.is_default():
                 continue
             await counting_channel.set_permissions(role, send_messages=True)
-
-        print("Permissions updated for counting channel.")
 
 async def setup(bot):
     cog = OnReady(bot)
