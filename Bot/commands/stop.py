@@ -29,9 +29,10 @@ class stop(commands.Cog):
         self.bot = bot
     
     @app_commands.command(name="stop", description="Stop the bot.")
-    async def stop(self, interaction: discord.Interaction, bot_owner_id):
+    async def stop(self, interaction: discord.Interaction):
         user_id = interaction.user.id
         server_owner_id = interaction.guild.owner_id
+        bot_owner_id = self.bot.get_user(bot_owner_id)
 
         counting_channel_id = self.bot.get_channel(counting_channel)
         bot_channel_id = self.bot.get_channel(bot_channel)
