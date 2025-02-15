@@ -13,7 +13,9 @@ Chillr provide various functionalities to enhance server management and user int
 
  - **Counting System**: A counting game where users must increment the number correctly without sending consecutive messages.
 
-Some features are still under developpement.
+The commands in this code do not have permission checks. Discord allows you to add them in the server options under `Integration -> "Bot name"`
+
+⚠ Some features are still in development and may experience bugs.
 
 
 ## Installation
