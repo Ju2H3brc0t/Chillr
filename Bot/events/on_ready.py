@@ -24,7 +24,7 @@ class OnReady(commands.Cog):
         self.bot = bot
 
     @commands.Cog.listener()
-    async def on_ready(self, ctx):
+    async def on_ready(self):
         await self.bot.wait_until_ready()
         print(f"Connected as {self.bot.user}")
 
@@ -44,15 +44,14 @@ class OnReady(commands.Cog):
                 continue
             await counting_channel.set_permissions(role, send_messages=True)
 
-        await ctx.bot_channel_id.purge(limit=100)
-        await ctx.bot_staff_channel_id.purge(limit=100)
-        await ctx.log_channel_id.purge(limit=100)
+        bot_channel = self.bot.get_channel(bot_channel_id)
+        bot_staff_channel = self.bot.get_channel(bot_staff_channel_id)
+        log_channel = self.bot.get_channel(log_channel_id)
+
+        await bot_channel.purge(limit=100)
+        await bot_staff_channel.purge(limit=100)
+        await log_channel.purge(limit=100)
 
 async def setup(bot):
     cog = OnReady(bot)
     await bot.add_cog(cog)
-
-    if bot.is_ready():
-        await cog.on_ready()
-
-
