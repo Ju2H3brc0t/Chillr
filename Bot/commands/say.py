@@ -7,10 +7,9 @@ class say(commands.Cog):
         self.bot = bot
     
     @app_commands.command(name="say", description="Make the bot say something.")
-    @app_commands.option(name="message", description="The message you want the bot to say.", type=app_commands.OptionType.STRING, required=True)
-    @app_commands.option(name="channel", description="The channel you want the bot to say the message in.", type=app_commands.OptionType.CHANNEL, required=False)
-    async def say(self, interaction: discord.Interaction, message: str):
-        await interaction.response.send_message(message)
+    @app_commands.describe(message="The message you want the bot to say.", channel="The channel you want the bot to say the message in.")
+    async def say(self, interaction: discord.Interaction, message: str, channel: discord.TextChannel = None):
+        await channel.send(message)
 
 async def setup(bot):
     await bot.add_cog(say(bot))
