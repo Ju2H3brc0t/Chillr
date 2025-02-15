@@ -30,8 +30,6 @@ class stop(commands.Cog):
     
     @app_commands.command(name="stop", description="Stop the bot.")
     async def stop(self, interaction: discord.Interaction):
-        user_id = interaction.user.id
-        server_owner_id = interaction.guild.owner_id
         bot_owner_id = self.bot.get_user(bot_owner_id)
 
         counting_channel_id = self.bot.get_channel(counting_channel)
@@ -39,27 +37,21 @@ class stop(commands.Cog):
         bot_staff_channel_id = self.bot.get_channel(bot_staff_channel)
         log_channel_id = self.bot.get_channel(log_channel)
         
-        try:
-            if user_id == bot_owner_id or user_id == server_owner_id:
-                await interaction.response.send_message("Stopping the bot...", ephemeral=True)
-                print("Stopping the bot...")
+        await interaction.response.send_message("Stopping the bot...", ephemeral=True)
+        print("Stopping the bot...")
         
-                for role in interaction.guild.roles:
-                    if role.is_default():
-                        continue
-                    await counting_channel_id.set_permissions(role, send_messages=False)
+        for role in interaction.guild.roles:
+            if role.is_default():
+                continue
+            await counting_channel_id.set_permissions(role, send_messages=False)
         
-                await bot_channel_id.purge(limit=100)
-                await bot_staff_channel_id.purge(limit=100)
-                await log_channel_id.purge(limit=100)
+            await bot_channel_id.purge(limit=100)
+            await bot_staff_channel_id.purge(limit=100)
+            await log_channel_id.purge(limit=100)
 
-                await self.bot.close()
-                sys.exit(0)
-            else:
-                await interaction.response.send_message("Sorry, only bot owner or server owner can shutdown the bot.", ephemeral=True)
-        except Exception as e:
-            await interaction.response.send_message(f"An error has occured: {e}", ephemeral=True)
-            print(f"An error has occured: {e}")
+        await self.bot.close()
+        sys.exit(0)
+
 
 async def setup(bot):
     await bot.add_cog(stop(bot))
