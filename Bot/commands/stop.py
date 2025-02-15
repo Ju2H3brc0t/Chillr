@@ -55,7 +55,7 @@ class stop(commands.Cog):
             await self.bot.close()
             sys.exit(0)
         else:
-            await interaction.response.send_message("", ephemeral=True)
+            await interaction.response.send_message("Sorry, only bot owner or server owner can shutdown the bot.", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(stop(bot))
