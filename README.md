@@ -73,7 +73,7 @@ nohup python3 ~/Chillr/Bot/main.py > Chillr.log 2>&1 &
 This will start the bot and redirect its output to `Chillr.log`. To stop it, use the kill command with the PID, which can be obtained using:
 
 ```bash
-ps aux | grep Chillr.py
+ps aux | grep main.py
 ```
 
 Once you have the PID, stop the bot by executing:
