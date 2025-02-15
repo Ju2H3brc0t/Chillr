@@ -52,6 +52,8 @@ class OnReady(commands.Cog):
         await bot_staff_channel.purge(limit=100)
         await log_channel.purge(limit=100)
 
+        print("Bot is ready.")
+        
 async def setup(bot):
     cog = OnReady(bot)
     await bot.add_cog(cog)
