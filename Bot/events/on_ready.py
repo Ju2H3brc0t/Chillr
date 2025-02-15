@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 import yaml
 import os
@@ -15,6 +16,10 @@ def load_config(config_file="event_config.yaml"):
 config = load_config()
 counting_channel_id = int(config['event']['counting']['channel_id'])
 
+bot_channel = int(config['event']['message_deletion']['channel_id']['bot_channel'])
+staff_bot_channel = int(config['event']['message_deletion']['channel_id']['staff_bot_channel'])
+log_channel = int(config['event']['message_deletion']['channel_id']['log_channel'])
+
 class OnReady(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -22,17 +27,16 @@ class OnReady(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         await self.bot.wait_until_ready()
-        print(f"Connected as {self.bot.user}")
+        print(f"Connecté en tant que {self.bot.user}")
 
         try:
             synced = await self.bot.tree.sync()
-            print(f"Synced {len(synced)} commands.")
+            print(f"{len(synced)} commandes synchronisées.")
         except Exception as e:
-            print(f"Failed to sync commands: {e}")
+            print(f"Échec de la synchronisation des commandes : {e}")
 
         counting_channel = self.bot.get_channel(counting_channel_id)
         if counting_channel is None:
-            print(f"Error: Channel ID {counting_channel_id} not found.")
             return
 
         for role in counting_channel.guild.roles:
@@ -40,9 +44,22 @@ class OnReady(commands.Cog):
                 continue
             await counting_channel.set_permissions(role, send_messages=True)
 
-async def setup(bot):
-    cog = OnReady(bot)
-    await bot.add_cog(cog)
+        channels = [
+            self.bot.get_channel(bot_channel),
+            self.bot.get_channel(staff_bot_channel),
+            self.bot.get_channel(log_channel)
+        ]
 
-    if bot.is_ready():
-        await cog.on_ready()
+        for channel in channels:
+            if channel is None:
+                continue
+
+            while True:
+                messages = await channel.history(limit=100).flatten()
+                if not messages:
+                    break
+                await channel.delete_messages(messages)
+
+async def setup(bot):
+    await bot.add_cog(OnReady(bot))
+
