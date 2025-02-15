@@ -23,6 +23,12 @@ class on_ready(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self, interaction: discord.Interaction):
+        print(f"Connected as {self.bot.user}")
+        try:
+            synced = await self.bot.tree.sync()
+            print(f"Synced {len(synced)} commands.")
+        except Exception as e:
+            print(f"Failed to sync commands: {e}")
         counting_channel_id = self.bot.get_channel(counting_channel)
         for role in interaction.guild.roles:
             if role.is_default():
