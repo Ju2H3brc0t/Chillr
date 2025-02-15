@@ -15,12 +15,16 @@ def load_config(config_file="event_config.yaml"):
 config = load_config()
 counting_channel_id = int(config['event']['counting']['channel_id'])
 
+bot_channel_id = int(config['event']['message_deletion']['channel_id']['bot'])
+bot_staff_channel_id = int(config['event']['message_deletion']['channel_id']['bot_staff'])
+log_channel_id = int(config['event']['message_deletion']['channel_id']['log'])
+
 class OnReady(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @commands.Cog.listener()
-    async def on_ready(self):
+    async def on_ready(self, ctx):
         await self.bot.wait_until_ready()
         print(f"Connected as {self.bot.user}")
 
@@ -39,6 +43,10 @@ class OnReady(commands.Cog):
             if role.is_default():
                 continue
             await counting_channel.set_permissions(role, send_messages=True)
+
+        await ctx.bot_channel_id.purge(limit=100)
+        await ctx.bot_staff_channel_id.purge(limit=100)
+        await ctx.log_channel_id.purge(limit=100)
 
 async def setup(bot):
     cog = OnReady(bot)
