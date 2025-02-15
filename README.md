@@ -33,6 +33,17 @@ cd Chillr
 pip install -r requirements.txt`
 ```
 
+## Updating
+
+To update the bot to its latest stable version, you can use the command below:
+
+```bash
+git pull origin main
+```
+
+Please note that using this command may overwrite the changes you have made, in this case it is recommended to copy the new version elsewhere and then add the changes one by one.
+
+
 
 ## Configuration 
 
@@ -42,8 +53,19 @@ Chillr Bot relies on YAML configurations files. Below is an example of how the s
 ```yaml
 path:
   token: "path_to_token.txt"
-  command: "./commands"
-  events: "./events"
+  command: "path_to_command_folder"
+  events: "path_to_events_folder"
+```
+
+`command_config.yaml`
+```yaml
+command:
+  stop:
+    channel_id:
+      counting: 123456789012345678
+      bot: 123456789012345678
+      bot_staff: 123456789012345678
+      log: 123456789012345678
 ```
 
 `event_config.yaml`
