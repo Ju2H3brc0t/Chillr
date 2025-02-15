@@ -28,3 +28,6 @@ class on_ready(commands.Cog):
             if role.is_default():
                 continue
             await counting_channel_id.set_permissions(role, send_messages=True)
+
+async def setup(bot):
+    await bot.add_cog(on_ready(bot))
