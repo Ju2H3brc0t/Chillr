@@ -22,15 +22,6 @@ token_file_path = config["path"]["token"]
 commands_file_path = config["path"]["commands"]
 event_file_path = config["path"]["events"]
 
-@bot.event
-async def on_ready():
-    print(f"Connected as {bot.user}.")
-    try:
-        synced = await bot.tree.sync()
-        print(f"Synced {len(synced)} commands.")
-    except Exception as e:
-        print(f"An error has occured: {e}")
-
 async def load_commands():
     for filename in os.listdir(commands_file_path):
         if filename.endswith('.py') and filename != "__init__.py":
