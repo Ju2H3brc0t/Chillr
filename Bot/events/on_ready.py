@@ -35,8 +35,6 @@ class OnReady(commands.Cog):
             print(f"Failed to sync commands: {e}")
 
         log_channel = self.bot.get_channel(log_channel_id)
-        if log_channel:
-            await log_channel.send("Bot is starting.")
 
         counting_channel = self.bot.get_channel(counting_channel_id)
         if counting_channel is None:
