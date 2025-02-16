@@ -48,8 +48,6 @@ class on_message(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if message.author == self.bot.user:
-            return
         
         message_channel = message.channel.id
 
