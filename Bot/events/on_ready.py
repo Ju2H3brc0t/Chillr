@@ -34,7 +34,9 @@ class OnReady(commands.Cog):
         except Exception as e:
             print(f"Failed to sync commands: {e}")
 
-        await log_channel_id.send("Bot is starting.")
+        log_channel = self.bot.get_channel(log_channel_id)
+        if log_channel:
+            await log_channel.send("Bot is starting.")
 
         counting_channel = self.bot.get_channel(counting_channel_id)
         if counting_channel is None:
@@ -47,15 +49,18 @@ class OnReady(commands.Cog):
 
         bot_channel = self.bot.get_channel(bot_channel_id)
         bot_staff_channel = self.bot.get_channel(bot_staff_channel_id)
-        log_channel = self.bot.get_channel(log_channel_id)
 
-        await bot_channel.purge(limit=100)
-        await bot_staff_channel.purge(limit=100)
-        await log_channel.purge(limit=100)
+        if bot_channel:
+            await bot_channel.purge(limit=100)
+        if bot_staff_channel:
+            await bot_staff_channel.purge(limit=100)
+        if log_channel:
+            await log_channel.purge(limit=100)
 
         print("Bot is ready.")
-        await log_channel_id.send("Bot is ready.")
-        
+        if log_channel:
+            await log_channel.send("Bot is ready.")
+
 async def setup(bot):
     cog = OnReady(bot)
     await bot.add_cog(cog)
