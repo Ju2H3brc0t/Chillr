@@ -51,14 +51,9 @@ class on_message(commands.Cog):
         
         message_channel = message.channel.id
 
-
-        print(f"Message from {message.author} in {message.channel}: {message.content}")
-
         if message_channel == bot_channel:
-            print(f"Deleting message from {message.author} in {message.channel}: {message.content}")
             await asyncio.sleep(bot_sleep)
             await message.delete()
-            print(f"Deleted message from {message.author} in {message.channel}: {message.content}")
         elif message_channel == staff_bot_channel:
             await asyncio.sleep(staff_bot_sleep)
             await message.delete()

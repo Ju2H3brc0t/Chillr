@@ -37,7 +37,7 @@ class stop(commands.Cog):
         await interaction.response.send_message(f"Bot is being stopped.", ephemeral=True)
         print(f"Bot is being stopped by {interaction.user.mention} ({interaction.user.id}).")
         
-        await log_channel_id.send(f"Bot is being stopped by {interaction.user.mention} ({interaction.user.id}).")
+        await log_channel_id.send(f"Bot is being stopped by {interaction.user.nick} ({interaction.user.id}).")
 
         for role in interaction.guild.roles:
             if role.is_default():
