@@ -13,11 +13,11 @@ def load_config(config_file="event_config.yaml"):
         return yaml.safe_load(file)
 
 config = load_config()
-counting_channel_id = int(config['event']['counting']['channel_id'])
+counting_channel_id = int(config['event']['on_ready']['counting']['channel_id'])
 
-bot_channel_id = int(config['event']['message_deletion']['channel_id']['bot'])
-bot_staff_channel_id = int(config['event']['message_deletion']['channel_id']['bot_staff'])
-log_channel_id = int(config['event']['message_deletion']['channel_id']['log'])
+bot_channel_id = int(config['event']['on_ready']['channel_id']['bot'])
+bot_staff_channel_id = int(config['event']['on_ready']['channel_id']['bot_staff'])
+log_channel_id = int(config['event']['on_ready']['channel_id']['log'])
 
 class OnReady(commands.Cog):
     def __init__(self, bot):

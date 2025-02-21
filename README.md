@@ -62,26 +62,41 @@ path:
 command:
   stop:
     channel_id:
-      counting: 123456789012345678
-      bot: 123456789012345678
-      bot_staff: 123456789012345678
-      log: 123456789012345678
+      counting: x
+      bot: x
+      bot_staff: x
+      log: x
+  partnership:
+    channel_id:
+      partnership: x
+  announcement:
+    channel_id:
+      announcement: x
 ```
 
 `event_config.yaml`
 ```yaml
 event:
   on_message:
-    channel_id:
-      bot: 123456789012345678
-      bot_staff: 123456789012345678
-      log: 123456789012345678
-    sleep_time:
-      bot: 60
-      bot_staff: 60
-      log: 60
+    message_deletion:
+      channel_id:
+        bot: x
+        bot_staff: x
+        log: x
+      sleep_time:
+        bot: x
+        bot_staff: x
+        log: x
     counting:
-      channel_id: 123456789012345678
+      channel_id: x
+      path: "path_to_count.json"
+  on_ready:
+    channel_id:
+      bot: x
+      bot_staff: x
+      log: x
+    counting:
+      channel_id: x
       path: "path_to_count.json"
 ```
 
