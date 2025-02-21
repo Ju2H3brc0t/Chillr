@@ -35,7 +35,7 @@ class stop(commands.Cog):
         log_channel_id = self.bot.get_channel(log_channel)
         
         await interaction.response.send_message(f"Bot is being stopped.", ephemeral=True)
-        print(f"Bot is being stopped by {interaction.user.nick} ({interaction.user.id}).")
+        print(f"Bot is being stopped by {interaction.user.display_name} ({interaction.user.id}).")
         
         await log_channel_id.send(f"Bot is being stopped by {interaction.user.mention} ({interaction.user.id}).")
 
