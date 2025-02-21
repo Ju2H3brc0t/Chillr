@@ -16,15 +16,15 @@ def load_config(config_file="event_config.yaml"):
 
 config = load_config()
 
-counting_channel = config['event']['counting']['channel_id']
-bot_channel = config['event']['message_deletion']['channel_id']['bot']
-staff_bot_channel = config['event']['message_deletion']['channel_id']['bot_staff']
-bot_sleep = config['event']['message_deletion']['sleep_time']['bot']
-staff_bot_sleep = config['event']['message_deletion']['sleep_time']['bot_staff']
-log_sleep = config['event']['message_deletion']['sleep_time']['log']
+counting_channel = config['event']['on_message']['counting']['channel_id']
+bot_channel = config['event']['on_message']['message_deletion']['channel_id']['bot']
+staff_bot_channel = config['event']['on_message']['message_deletion']['channel_id']['bot_staff']
+bot_sleep = config['event']['on_message']['message_deletion']['sleep_time']['bot']
+staff_bot_sleep = config['event']['on_message']['message_deletion']['sleep_time']['bot_staff']
+log_sleep = config['event']['on_message']['message_deletion']['sleep_time']['log']
 
-log_channel = config['event']['message_deletion']['channel_id']['log']
-file_path_count = config['event']['counting']['path']
+log_channel = config['event']['on_message']['message_deletion']['channel_id']['log']
+file_path_count = config['event']['on_message']['counting']['path']
 
 def load_count():
     try:
