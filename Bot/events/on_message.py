@@ -81,8 +81,11 @@ class on_message(commands.Cog):
                     await message.channel.send(f"{message.author.mention} s'est trompé, {reason}, le compteur a été remis à zéro.")
                 last_message = {message.author.id: message.content}
             except ValueError:
-                await message.add_reaction("❌")
-                await message.channel.send(f"{message.author.mention}, veuillez envoyer un nombre entier.")
+                if message.author.id != self.bot.user.id:
+                    message.add_reaction("❌")
+                    await message.channel.send(f"{message.author.mention}, veuillez envoyer un nombre entier.\n-# Le prochain nombre est {count + 1}")
+                else:
+                    pass
 
 async def setup(bot):
     await bot.add_cog(on_message(bot))
