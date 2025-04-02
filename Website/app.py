@@ -24,6 +24,15 @@ def load_users():
     with open(file_path, 'r', encoding="utf-8") as f:
         return json.load(f)
 
+print(f"Reading file: {file_path}")
+if not os.path.exists(file_path):
+    print("File not found")
+else:
+    with open(file_path, "r", encoding="utf-8") as f:
+        content = f.read()
+        print("File content:")
+        print(content)
+
 @app.route("/")
 def home():
     session = request.cookies.get("session")
@@ -40,10 +49,12 @@ def login():
 
         if username in users and users[username] == password:
             resp = make_response(redirect("/dashboard"))
-            resp.set_cookie("session", username)  # Stocke le nom d'utilisateur dans un cookie
+            resp.set_cookie("session", username)
+            print(f"User {username} logged in successfully.")
             return resp
 
-        return redirect("/login")  # Redirige si le mot de passe est faux
+        return redirect("/login")
+        print(f"Failed login attempt for user {username}.")
 
     return render_template("login.html")
 
@@ -57,7 +68,7 @@ def dashboard():
 @app.route("/logout", methods=["POST"])
 def logout():
     resp = make_response(redirect("/login"))
-    resp.set_cookie("session", "", expires=0)  # Supprime le cookie de session
+    resp.set_cookie("session", "", expires=0)
     return resp
 
 if __name__ == "__main__":
