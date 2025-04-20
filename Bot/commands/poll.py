@@ -45,25 +45,29 @@ class PollModal(discord.ui.Modal):
             self.options.append(input_field)
 
     async def on_submit(self, interaction: discord.Interaction):
-        poll_channel = interaction.client.get_channel(config['command']['poll']['channel_id']['poll'])
+        try:
+            poll_channel = interaction.client.get_channel(config['command']['poll']['channel_id']['poll'])
 
-        embed = discord.Embed(
-            title="🗳️ Nouveau Sondage",
-            description=self.question,
-            color=discord.Color.blurple()
-        )
+            embed = discord.Embed(
+                title="🗳️ Nouveau Sondage",
+                description=self.question,
+                color=discord.Color.blurple()
+            )
 
-        emojis = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣"]
+            emojis = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣"]
 
-        for i, option in enumerate(self.options):
-            embed.add_field(name=emojis[i], value=option.value, inline=False)
+            for i, option in enumerate(self.options):
+                embed.add_field(name=emojis[i], value=option.value, inline=False)
 
-        msg = await poll_channel.send(embed=embed)
+            msg = await poll_channel.send(embed=embed)
 
-        for i in range(self.option_count):
-            await msg.add_reaction(emojis[i])
+            for i in range(self.option_count):
+                await msg.add_reaction(emojis[i])
 
-        await interaction.response.send_message("Sondage créé avec succès ✅", ephemeral=True)
+            await interaction.response.send_message("Sondage créé avec succès ✅", ephemeral=True)
+        except Exception as e:
+            await interaction.response.send_message(f"Une erreur s'est produite lors de la création du sondage : {e}", ephemeral=True)
+            print(f"Erreur lors de la création du sondage : {e}")
 
 
 async def setup(bot):
