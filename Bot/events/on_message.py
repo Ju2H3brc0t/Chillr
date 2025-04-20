@@ -82,7 +82,7 @@ class on_message(commands.Cog):
                 last_message = {message.author.id: message.content}
             except ValueError:
                 if message.author.id != self.bot.user.id:
-                    message.add_reaction("❌")
+                    await message.add_reaction("❌")
                     await message.channel.send(f"{message.author.mention}, veuillez envoyer un nombre entier.\n-# Le prochain nombre est {count + 1}")
                 else:
                     pass
