@@ -56,12 +56,12 @@ class PollModal(discord.ui.Modal):
                 colour=0xe01b24
             )
 
-            emojis = ["🟦", "🟥", "🟩", "🟨", "🟪"]
+            emojis = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣"]
 
             for i, option in enumerate(self.options):
                 embed.add_field(name=emojis[i], value=option.value, inline=False)
 
-            msg = await poll_channel.send(f"#__Sondage:__\n-# {self.mention.mention}", embed=embed)
+            msg = await poll_channel.send(f"# __Sondage:__\n-# {self.mention.mention}", embed=embed)
 
             for i in range(self.option_count):
                 await msg.add_reaction(emojis[i])
