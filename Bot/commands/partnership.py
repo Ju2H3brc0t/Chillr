@@ -49,7 +49,7 @@ class PartnershipModal(discord.ui.Modal, title="Partnership Message"):
         embed.add_field(name="**Responsable:**", value=self.responsible.mention, inline=False)
         embed.set_footer(text="Partenariat")
 
-        await partnership_channel_id.send(content=f"# __Partenariats:__\n-# {self.mention.mention}\n\n{self.message.value}\n", embed=embed)
+        await partnership_channel_id.send(content=f"# __Partenariat:__\n-# {self.mention.mention}\n\n{self.message.value}\n", embed=embed)
         await interaction.response.send_message("Your partnership message has been sent.", ephemeral=True)
 
 async def setup(bot):
