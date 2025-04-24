@@ -34,11 +34,16 @@ class OnRawReactionAdd(commands.Cog):
             if not user:
                 return
             
+            print(channel, message, user)
+
             for reaction in message.reactions:
+                print(reaction)
                 if reaction.me:
                     continue
                 users = await reaction.users().flatten()
+                print(users)
                 if user in users and str(reaction.emoji) != str(payload.emoji.name):
+                    print(reaction.emoji, payload.emoji.name)
                     await message.remove_reaction(reaction.emoji, user)
                     break
 
