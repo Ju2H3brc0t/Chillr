@@ -20,32 +20,29 @@ class OnRawReactionAdd(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.Cog.listener()
-    async def on_raw_reaction_add(self, payload):
-        try:
-            print(payload)
+        @commands.Cog.listener()
+        async def on_raw_reaction_add(self, payload):
+            try:
+                if payload.channel_id == poll_channel and payload.user_id != self.bot.user.id:
+                    channel = self.bot.get_channel(payload.channel_id)
+                    if not channel:
+                        return
 
-            if payload.channel_id == poll_channel and payload.user_id != self.bot.user.id:
+                    message = await channel.fetch_message(payload.message_id)
+                    user = message.guild.get_member(payload.user_id)
+                    if not user:
+                        return
 
-                channel = self.bot.get_channel(payload.channel_id)
-                if not channel:
-                    return
-                message = await channel.fetch_message(payload.message_id)
-                user = message.guild.get_member(payload.user_id)
-                if not user:
-                    return
-            
-                print(channel, message, user)
+                    for reaction in message.reactions:
+                        if str(reaction.emoji) != str(payload.emoji.name):
+                            async for u in reaction.users():
+                                if u.id == payload.user_id:
+                                    await message.remove_reaction(reaction.emoji, user)
+                                    return
+                                
+            except Exception as e:
+                print(f"An error occurred: {e}")
 
-                for reaction in message.reactions:
-                    if str(reaction.emoji) != str(payload.emoji.name):
-                        for u in reaction.users():
-                            if u.id == payload.user_id:
-                                await message.remove_reaction(payload.emoji, user)
-                                return
-                            
-        except Exception as e:
-            print(f"An error occurred: {e}")
 
 async def setup(bot):
     await bot.add_cog(OnRawReactionAdd(bot))
