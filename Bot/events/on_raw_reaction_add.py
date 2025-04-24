@@ -24,6 +24,8 @@ class OnRawReactionAdd(commands.Cog):
     async def on_raw_reaction_add(self, payload):
         print(payload)
 
+        raise(Exception("Debug error."))
+
         if payload.channel_id == poll_channel and payload.user_id != self.bot.user.id:
 
             channel = self.bot.get_channel(payload.channel_id)
@@ -37,15 +39,12 @@ class OnRawReactionAdd(commands.Cog):
             print(channel, message, user)
 
             for reaction in message.reactions:
-                print(reaction)
-                if reaction.me:
-                    continue
-                users = await reaction.users().flatten()
-                print(users)
-                if user in users and str(reaction.emoji) != str(payload.emoji.name):
-                    print(reaction.emoji, payload.emoji.name)
-                    await message.remove_reaction(reaction.emoji, user)
-                    break
+                if reaction.emoji != payload.emoji.name:  # comparaison directe
+                    users = await reaction.users().flatten()
+                    for u in users:
+                        if u.id == payload.user_id:
+                            await message.remove_reaction(payload.emoji, user)
+                            return
 
 async def setup(bot):
     await bot.add_cog(OnRawReactionAdd(bot))
