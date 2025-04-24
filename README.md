@@ -15,6 +15,8 @@ Chillr provide various functionalities to enhance server management and user int
 
  - **Counting System**: A counting game where users must increment the number correctly without sending consecutive messages.
 
+ - **Poll System**: A system for creating and managing polls in the server. Users can react to poll messages with emojis, and their votes will be recorded. It also includes automatic reaction removal if users react twice.
+
 The commands added in this code do not have permission checks. Discord allows you to add them in the server options under `Integration -> "Bot name"`
 
 ⚠ Some features are still in development and may experience bugs.
@@ -74,6 +76,9 @@ command:
   announcement:
     channel_id:
       announcement: x
+  poll:
+    channel_id:
+      poll: x
 ```
 
 `event_config.yaml`
@@ -100,6 +105,10 @@ event:
     counting:
       channel_id: x
       path: "path_to_count.json"
+  on_raw_reation_add:
+    reaction_deletion:
+      channel_id:
+        poll: x
 ```
 
 
