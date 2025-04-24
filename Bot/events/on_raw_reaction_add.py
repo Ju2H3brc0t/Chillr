@@ -40,3 +40,6 @@ class OnRawReactionAdd(commands.Cog):
                 if user in users and str(reaction.emoji) != str(payload.emoji.name):
                     await message.remove_reaction(reaction.emoji, user)
                     break
+
+async def setup(bot):
+    await bot.add_cog(OnRawReactionAdd(bot))
