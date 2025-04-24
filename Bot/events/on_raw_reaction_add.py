@@ -1,4 +1,3 @@
-import discord
 from discord.ext import commands
 import yaml
 import os
@@ -23,6 +22,8 @@ class OnRawReactionAdd(commands.Cog):
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
+        print(payload)
+
         if payload.channel_id == poll_channel and payload.user_id != self.bot.user.id:
 
             channel = self.bot.get_channel(payload.channel_id)
