@@ -25,8 +25,6 @@ class OnRawReactionAdd(commands.Cog):
         try:
             print(payload)
 
-#           raise(Exception("Debug error."))
-
             if payload.channel_id == poll_channel and payload.user_id != self.bot.user.id:
 
                 channel = self.bot.get_channel(payload.channel_id)
@@ -41,8 +39,7 @@ class OnRawReactionAdd(commands.Cog):
 
                 for reaction in message.reactions:
                     if str(reaction.emoji) != str(payload.emoji.name):
-                        users = await reaction.users().flatten()
-                        for u in users:
+                        for u in reaction.users():
                             if u.id == payload.user_id:
                                 await message.remove_reaction(payload.emoji, user)
                                 return
